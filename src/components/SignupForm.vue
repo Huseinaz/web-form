@@ -13,7 +13,7 @@
         </select>
 
         <label>Skills:</label>
-        <input type="text" v-model="tempSkill" @keydown="addSkill">
+        <input type="text" v-model="tempSkill" @keyup.alt="addSkill">
         <div v-for="skill in skills" :key="skill" class="pill">
             {{ skill }}
         </div>
@@ -44,8 +44,10 @@ export default {
     methods: {
         addSkill(e) {
             if(e.key === ',' && this.terms) {
-                this.skills.push(this.tempSkill)
-                this.tempSkill == ''
+                if(!this.skills.includes(this.tempSkill)) { //if the skills aray already includes the tempSkill
+                    this.skills.push(this.tempSkill)
+                }
+                this.tempSkill = ''
             }
         }
     },
