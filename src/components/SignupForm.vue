@@ -15,7 +15,7 @@
         <label>Skills:</label>
         <input type="text" v-model="tempSkill" @keyup.alt="addSkill">
         <div v-for="skill in skills" :key="skill" class="pill">
-            {{ skill }}
+            <span @click="deleteSkill(skill)">{{ skill }}</span>
         </div>
 
         <div class="terms">
@@ -43,12 +43,17 @@ export default {
     },
     methods: {
         addSkill(e) {
-            if(e.key === ',' && this.terms) {
+            if(e.key === ',' && this.tempSkill) {
                 if(!this.skills.includes(this.tempSkill)) { //if the skills aray already includes the tempSkill
                     this.skills.push(this.tempSkill)
                 }
                 this.tempSkill = ''
             }
+        },
+        deleteSkill(skill) {
+            this.skills = this.skills.filter((item) => { //filter cycle thrue array and find if the function for each item in the array. If true we'll keep it in the array else remove it.
+                return skill !== item // skill == item => delete
+            })
         }
     },
 }
@@ -88,5 +93,17 @@ input[type="checkbox"] {
     margin: 0 10px 0 0;
     position: relative;
     top: 2px;
+}
+.pill {
+    display: inline-block;
+    margin: 20px 10px 0 0;
+    padding: 6px 12px;
+    background: #eee;
+    border-radius: 20px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color: #777;
+    cursor: pointer;
 }
 </style>
